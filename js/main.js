@@ -562,6 +562,24 @@ function initCategoriaPage() {
 
   const cat = CATEGORIAS_ARREGLOS.find(c => c.id === catId);
 
+  // ✅ Link "volver" dinámico según de dónde venga el usuario
+  const volverLink = document.getElementById("volverLink");
+  if (volverLink) {
+    if (subId) {
+      // Viendo productos de una subcategoría (ej. eventos_sociales&sub=recepcion)
+      volverLink.href = `categoria.html?id=${catId}`;
+      volverLink.textContent = `⬅ Volver a ${cat ? cat.nombre : "categorías"}`;
+    } else if (catId === "eventos_sociales" || catId === "eventos_realizados") {
+      // Se llega directo desde el home, no desde arreglos.html
+      volverLink.href = "index.html";
+      volverLink.textContent = "⬅ Volver al inicio";
+    } else {
+      // Categorías normales de arreglos: rosas, eternos, girasoles, tulipanes, box, condolencias, ramos
+      volverLink.href = "arreglos.html";
+      volverLink.textContent = "⬅ Volver a categorías";
+    }
+  }
+
   if (!cat) {
     if (h2) h2.textContent = "Categoría no encontrada";
     grid.innerHTML = `<p>No existe esta categoría.</p>`;

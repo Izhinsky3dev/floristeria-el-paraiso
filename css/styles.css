@@ -50,6 +50,12 @@ h2 {
   font-size: 28px;
 }
 
+.subtitulo {
+  margin: -12px 0 20px;
+  font-size: 16px;
+  color: #6b6b6b;
+}
+
 /* ===== GRID PRODUCTOS ===== */
 .grid{
   display: grid;
@@ -163,6 +169,33 @@ footer {
   padding: 20px;
   text-align: center;
   color: #444;
+}
+
+/* ===== CHIPS DE TELÉFONO (mismo estilo que el badge de precio) ===== */
+.phone-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 4px 0 6px;
+}
+
+.phone-chip {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--green-accent-light);
+  color: #2f6b4f;
+  border: 1px solid rgba(95, 166, 134, 0.35);
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background .2s ease, transform .15s ease;
+}
+
+.phone-chip:hover {
+  background: #d9ede3;
+  transform: translateY(-2px);
 }
 
 /* ===== WHATSAPP FLOTANTE ===== */
@@ -725,6 +758,12 @@ html, body {
     bottom: 92px;
     transform: translateX(-50%);
   }
+
+  /* Espacio de scroll extra al final para que "Ver Ubicación" pueda
+     despejarse por completo del botón fijo de WhatsApp */
+  footer{
+    padding-bottom: 110px;
+  }
 }
 /* ===== UBICACIÓN / DIRECCIÓN ===== */
 .location {
@@ -749,8 +788,7 @@ html, body {
   position: relative;
   width: 100%;
   max-width: 700px;
-  height: 0;
-  padding-bottom: 56.25%; /* proporción 16:9, responsive sin JS */
+  aspect-ratio: 16 / 9; /* liga el alto al ancho PROPIO (ya topado a 700px), nunca al del padre */
   margin: 6px auto 20px;
   border-radius: 16px;
   overflow: hidden;
