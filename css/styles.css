@@ -2,11 +2,26 @@
   box-sizing: border-box;
 }
 
+:root {
+  --pink: #ff2e7a;
+  --pink-dark: #e61f67;
+  --green-accent: #5fa686;
+  --green-accent-light: #e7f4ee;
+  --font-display: "Playfair Display", Georgia, serif;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #fff0f6; /* rosado suave */
   color: #222;
+}
+
+/* ===== TIPOGRAFÍA DE ACENTO ===== */
+h1, h2,
+.producto h3,
+.precio {
+  font-family: var(--font-display);
 }
 
 
@@ -39,7 +54,7 @@ h2 {
 .grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
+  gap: 30px;
   align-items: start;
 }
 
@@ -49,10 +64,40 @@ h2 {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,.08);
-  transition: transform .15s ease;
+  transition: transform .25s ease, box-shadow .25s ease, opacity .6s ease;
 }
 
-.producto:hover{ transform: translateY(-3px); }
+/* Animación de entrada al hacer scroll (activada por JS vía IntersectionObserver).
+   Si JS no corre, .js-anim-ready nunca se agrega y las tarjetas quedan visibles siempre. */
+.js-anim-ready .producto{
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.js-anim-ready .producto.in-view{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.producto:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0,0,0,.16), 0 0 0 2px rgba(255,46,122,.35), 0 0 22px rgba(255,46,122,.25);
+}
+
+.js-anim-ready .producto.in-view:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(0,0,0,.16), 0 0 0 2px rgba(255,46,122,.35), 0 0 22px rgba(255,46,122,.25);
+}
+
+/* ===== MARCO DE IMAGEN (fondo uniforme para fotos de distinta calidad) ===== */
+.producto-img-wrap{
+  background: linear-gradient(135deg, #fff5f8, var(--green-accent-light));
+  padding: 10px;
+}
+
+.producto-img-wrap img{
+  border-radius: 10px;
+}
 
 /* ===== IMAGEN PRODUCTO ===== */
 .producto img{
@@ -60,23 +105,34 @@ h2 {
   height: 160px;      /* 👈 más chico aún */
   object-fit: cover;
   display: block;
+  transition: transform .35s ease;
+}
+
+.producto:hover img{
+  transform: scale(1.06);
 }
 
 /* ===== INFO ===== */
 .producto .info{
-  padding: 12px 12px 14px;
+  padding: 16px 18px 20px;
   text-align: left;
 }
 
 .producto h3{
-  margin: 0 0 6px;
-  font-size: 16px;
+  margin: 0 0 10px;
+  font-size: 17px;
 }
 
 .precio{
+  display: inline-block;
   font-weight: bold;
-  font-size: 15px;
-  margin: 0 0 10px 0;
+  font-size: 14px;
+  margin: 0 0 12px 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--green-accent-light);
+  color: #2f6b4f;
+  border: 1px solid rgba(95, 166, 134, 0.35);
 }
 
 
@@ -114,6 +170,7 @@ footer {
   position: fixed;
   right: 18px;
   bottom: 18px;
+  z-index: 1;
   background: #25D366;
   color: white;
   padding: 14px 16px;
@@ -125,6 +182,28 @@ footer {
 
 .whatsapp:hover {
   filter: brightness(0.95);
+}
+
+/* Anillo expandiéndose detrás del botón, cada pocos segundos */
+.whatsapp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  border: 2px solid rgba(37, 211, 102, 0.85);
+  animation: whatsapp-ripple 2.8s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes whatsapp-ripple {
+  0% { transform: scale(1); opacity: .7; }
+  70% { opacity: .15; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp::after { animation: none; display: none; }
 }
 
 /* ===== NAVBAR PRO ===== */
@@ -268,6 +347,8 @@ footer {
 
 /* ===== HERO con imagen ===== */
 .hero {
+  position: relative;
+  overflow: hidden;
   background-image:
     linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40)),
     url("../images/hero.jpg");
@@ -279,8 +360,62 @@ footer {
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   max-width: 900px;
   margin: 0 auto;
+}
+
+/* ===== PÉTALOS CAYENDO (CSS puro) ===== */
+.petals {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petals span {
+  position: absolute;
+  top: -10%;
+  font-size: 20px;
+  opacity: 0;
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.petals span:nth-child(1) { left: 6%;  font-size: 18px; animation-duration: 12s; animation-delay: 0s; }
+.petals span:nth-child(2) { left: 18%; font-size: 14px; animation-duration: 9s;  animation-delay: 2s; }
+.petals span:nth-child(3) { left: 32%; font-size: 20px; animation-duration: 14s; animation-delay: 4s; }
+.petals span:nth-child(4) { left: 47%; font-size: 16px; animation-duration: 10s; animation-delay: 1s; }
+.petals span:nth-child(5) { left: 61%; font-size: 18px; animation-duration: 13s; animation-delay: 6s; }
+.petals span:nth-child(6) { left: 74%; font-size: 15px; animation-duration: 11s; animation-delay: 3s; }
+.petals span:nth-child(7) { left: 86%; font-size: 19px; animation-duration: 15s; animation-delay: 5s; }
+.petals span:nth-child(8) { left: 94%; font-size: 14px; animation-duration: 9s;  animation-delay: 7s; }
+
+@keyframes petal-fall {
+  0% {
+    transform: translateY(-10%) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  8% { opacity: .75; }
+  92% { opacity: .6; }
+  100% {
+    transform: translateY(420px) translateX(26px) rotate(300deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petals { display: none; }
+  .js-anim-ready .producto,
+  .js-anim-ready .producto.in-view {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .hero h1 {
@@ -455,45 +590,6 @@ footer {
   box-shadow: 0 12px 40px rgba(0,0,0,.35);
 }
 
-/* Grid más tipo catálogo */
-.grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-  align-items: start;
-}
-
-/* Tarjeta */
-.producto{
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 18px rgba(0,0,0,.08);
-}
-
-/* Imagen tamaño fijo (no gigante) */
-.producto img{
-  width: 100%;
-  height: 170px;      /* ajusta: 150-200 */
-  object-fit: cover;  /* recorta bonito */
-  display: block;
-}
-
-/* Info compacta */
-.producto .info{
-  padding: 12px 12px 14px;
-}
-
-.producto .info h3{
-  margin: 0 0 6px;
-  font-size: 1rem;
-}
-
-.producto .precio{
-  margin: 0 0 10px;
-  font-weight: 700;
-}
-
 .producto button{
   width: 100%;
   border: 0;
@@ -620,6 +716,15 @@ html, body {
     align-items: center;
     z-index: 9999;
   }
+
+  /* #btnTop se alinea con WhatsApp (mismo centro) y queda apilado
+     arriba, con espacio de sobra para que nunca se toquen */
+  #btnTop{
+    left: 50%;
+    right: auto;
+    bottom: 92px;
+    transform: translateX(-50%);
+  }
 }
 /* ===== UBICACIÓN / DIRECCIÓN ===== */
 .location {
@@ -637,6 +742,29 @@ html, body {
   margin: 6px 0 14px;
   font-size: 16px;
   color: #444;
+}
+
+/* ===== MAPA EMBEBIDO ===== */
+.map-embed {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 0;
+  padding-bottom: 56.25%; /* proporción 16:9, responsive sin JS */
+  margin: 6px auto 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  border: 1px solid rgba(95, 166, 134, 0.25);
+}
+
+.map-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .map-link {

@@ -6,6 +6,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Floristería el Paraíso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -72,6 +75,11 @@
 
   <!-- ===== HERO ===== -->
   <header class="hero">
+    <div class="petals" aria-hidden="true">
+      <span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span>
+      <span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span>
+    </div>
+
     <div class="hero-content">
       <h1>Floristería el Paraíso</h1>
       <p>Flores y Regalos</p>
@@ -89,7 +97,7 @@
 
     <section class="grid">
       <div class="producto">
-        <img src="images/eventossociales.jpg" alt="Eventos Sociales">
+        <div class="producto-img-wrap"><img src="images/eventossociales.jpg" alt="Eventos Sociales"></div>
         <div class="info">
           <h3>Eventos Sociales</h3>
           <button onclick="window.location.href='categoria.html?id=eventos_sociales'">Ver</button>
@@ -97,7 +105,7 @@
       </div>
 
       <div class="producto">
-        <img src="images/arreglosflorales.jpg" alt="Arreglos Florales">
+        <div class="producto-img-wrap"><img src="images/arreglosflorales.jpg" alt="Arreglos Florales"></div>
         <div class="info">
           <h3>Arreglos Florales</h3>
           <button onclick="window.location.href='arreglos.html'">Ver</button>
@@ -105,7 +113,7 @@
       </div>
 
       <div class="producto">
-        <img src="images/eventosrealizados.jpg" alt="Entregas Exitosas - Eventos Realizados">
+        <div class="producto-img-wrap"><img src="images/eventosrealizados.jpg" alt="Entregas Exitosas - Eventos Realizados"></div>
         <div class="info">
           <h3>Entregas Exitosas - Eventos Realizados</h3>
           <button onclick="window.location.href='categoria.html?id=eventos_realizados'">Ver</button>
@@ -126,9 +134,19 @@
     Av. Juan Velasco Alvarado 983 – Villa El Salvador
   </p>
 
+  <div class="map-embed">
+    <iframe
+      src="https://www.google.com/maps?q=Av.+Juan+Velasco+Alvarado+983,+Villa+El+Salvador,+Peru&z=17&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+      title="Mapa de ubicación de Floristería el Paraíso"
+    ></iframe>
+  </div>
+
   <a
     class="map-link"
-    href="https://www.google.com/maps/place/Av.+Juan+Velasco+Alvarado+983,+Villa+EL+Salvador+15831/@-12.2097892,-76.9443639,17z"
+    href="https://www.google.com/maps/search/?api=1&query=Av.+Juan+Velasco+Alvarado+983%2C+Villa+El+Salvador%2C+Peru"
     target="_blank"
   >
     📍 Ver Ubicación

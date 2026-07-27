@@ -1,6 +1,10 @@
 let lightboxImages = [];
 let currentIndex = 0;
 
+// Habilita la animación de entrada de las tarjetas solo si JS corrió bien
+// (si algo falla, .producto nunca queda oculto de forma permanente).
+document.documentElement.classList.add("js-anim-ready");
+
 let cartCount = 0;
 
 function updateCart() {
@@ -83,7 +87,7 @@ const CATEGORIAS_ARREGLOS = [
   { id: "girasoles", nombre: "Arreglos y ramos de girasoles", img: "images/cat-girasoles.jpg" },
   { id: "tulipanes", nombre: "Arreglos y ramos de tulipanes", img: "images/cat-tulipanes.jpg" },
   { id: "box", nombre: "Canastas y box", img: "images/cat-box.jpg" },
-  { id: "condolencias", nombre: "Condolencias", img: "images/cat-condolencias.jpg" },
+  { id: "condolencias", nombre: "Condolencias", img: "images/condolencias/corona de rosas y lilium S.240.JPG" },
   { id: "ramos", nombre: "Ramos florales", img: "images/cat-ramos.jpg" },
   { id: "eventos_sociales", nombre: "Eventos Sociales", img: "images/eventossociales.jpg" },
   { id: "eventos_realizados", nombre: "Entregas Exitosas - Eventos Realizados", img: "images/eventosrealizados.jpg" },
@@ -529,7 +533,7 @@ function renderCategoriasArreglos() {
 
   cont.innerHTML = CATS_SOLO_ARREGLOS.map(cat => `
     <div class="producto">
-      <img src="${cat.img}" alt="${cat.nombre}">
+      <div class="producto-img-wrap"><img src="${cat.img}" alt="${cat.nombre}"></div>
       <div class="info">
         <h3>${cat.nombre}</h3>
         <button onclick="window.location.href='categoria.html?id=${cat.id}'">Ver</button>
@@ -578,12 +582,14 @@ function initCategoriaPage() {
 
     grid.innerHTML = data.map(p => `
   <div class="producto">
-    <img
-      src="${p.img}"
-      alt="${p.nombre}"
-      style="cursor: zoom-in"
-      onclick="openLightboxIndex(${lightboxImages.indexOf(p.img)})"
-    >
+    <div class="producto-img-wrap">
+      <img
+        src="${p.img}"
+        alt="${p.nombre}"
+        style="cursor: zoom-in"
+        onclick="openLightboxIndex(${lightboxImages.indexOf(p.img)})"
+      >
+    </div>
     <div class="info">
       <h3>${p.nombre}</h3>
 
@@ -612,12 +618,14 @@ function initCategoriaPage() {
 
         return `
       <div class="producto">
-        <img
-          src="${portada}"
-          alt="${sub.nombre}"
-          style="cursor:pointer"
-          onclick="window.location.href='categoria.html?id=${catId}&sub=${key}'"
-        >
+        <div class="producto-img-wrap">
+          <img
+            src="${portada}"
+            alt="${sub.nombre}"
+            style="cursor:pointer"
+            onclick="window.location.href='categoria.html?id=${catId}&sub=${key}'"
+          >
+        </div>
         <div class="info">
           <h3>${sub.nombre}</h3>
           <button onclick="window.location.href='categoria.html?id=${catId}&sub=${key}'">Ver</button>
@@ -650,12 +658,14 @@ function initCategoriaPage() {
       const src = `${sub.carpeta}/${p.img}`;
       return `
         <div class="producto">
-          <img
-            src="${src}"
-            alt="${p.nombre}"
-            style="cursor: zoom-in"
-            onclick="openLightbox('${src}', '${p.nombre.replace(/'/g, "\\'")}')"
-          >
+          <div class="producto-img-wrap">
+            <img
+              src="${src}"
+              alt="${p.nombre}"
+              style="cursor: zoom-in"
+              onclick="openLightbox('${src}', '${p.nombre.replace(/'/g, "\\'")}')"
+            >
+          </div>
           <div class="info">
             <h3>${p.nombre}</h3>
             ${p.precio != null ? `<p class="precio">S/ ${Number(p.precio).toFixed(2)}</p>` : ""}
@@ -759,6 +769,28 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
+});
+
+// ===== ANIMACIÓN DE ENTRADA AL HACER SCROLL (.producto) =====
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".producto");
+  if (!cards.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    cards.forEach((c) => c.classList.add("in-view"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+  cards.forEach((card) => observer.observe(card));
 });
 
 // ===== BOTÓN VOLVER ARRIBA (GLOBAL + SOLO MÓVIL) =====
