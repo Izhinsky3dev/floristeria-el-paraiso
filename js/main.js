@@ -724,6 +724,43 @@ function prevImage(e) {
     (currentIndex - 1 + lightboxImages.length) % lightboxImages.length;
   document.getElementById("lightboxImg").src = lightboxImages[currentIndex];
 }
+// ===== MENÚ HAMBURGUESA (MÓVIL) =====
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("navToggle");
+  const links = document.getElementById("navLinks");
+  const overlay = document.getElementById("navOverlay");
+  if (!toggle || !links) return;
+
+  function closeMenu() {
+    links.classList.remove("open");
+    if (overlay) overlay.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-open");
+  }
+
+  function openMenu() {
+    links.classList.add("open");
+    if (overlay) overlay.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("nav-open");
+  }
+
+  toggle.addEventListener("click", () => {
+    const isOpen = links.classList.contains("open");
+    if (isOpen) closeMenu(); else openMenu();
+  });
+
+  if (overlay) overlay.addEventListener("click", closeMenu);
+
+  links.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+});
+
 // ===== BOTÓN VOLVER ARRIBA (GLOBAL + SOLO MÓVIL) =====
 document.addEventListener("DOMContentLoaded", () => {
   const btnTop = document.getElementById("btnTop");
