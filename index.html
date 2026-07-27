@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floristería el Paraíso</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="index.html">
+        <span class="brand-icon">🌸</span>
+        <span class="brand-name">Floristería el Paraíso</span>
+      </a>
+
+      <ul class="nav-links">
+        <li>
+          <a href="categoria.html?id=eventos_sociales">
+            Eventos Sociales
+          </a>
+        </li>
+
+        <li>
+          <a href="arreglos.html">
+            Arreglos Florales
+          </a>
+        </li>
+
+        <li>
+          <a href="categoria.html?id=eventos_realizados">
+            Entregas Exitosas
+          </a>
+        </li>
+
+        <li>
+          <a href="https://wa.me/51934042514?text=Hola,%20quiero%20informaci%c3%b3n%20sobre%20sus%20arreglos"
+            target="_blank">
+             Contacto
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="nav-right">
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Buscar arreglos..." />
+        <button id="searchBtn" type="button">🔎</button>
+      </div>
+
+      <a class="icon-btn" href="https://wa.me/51934042514" target="_blank" title="Contacto WhatsApp">
+        📞
+      </a>
+
+      <!-- <button class="icon-btn cart-btn" id="cartBtn" type="button" title="Carrito">
+        🛒 <span class="badge" id="cartCount">0</span>
+      </button> -->
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Floristería el Paraíso</h1>
+      <p>Flores y Regalos</p>
+
+      <div class="hero-actions">
+        <a class="btn-primary" href="arreglos.html">Ver catálogo completo</a>
+        <a class="btn-ghost" href="#catalogo">Ver productos</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="container" id="catalogo">
+    <h2>Catálogo</h2>
+
+    <section class="grid">
+      <div class="producto">
+        <img src="images/eventossociales.jpg" alt="Eventos Sociales">
+        <div class="info">
+          <h3>Eventos Sociales</h3>
+          <button onclick="window.location.href='categoria.html?id=eventos_sociales'">Ver</button>
+        </div>
+      </div>
+
+      <div class="producto">
+        <img src="images/arreglosflorales.jpg" alt="Arreglos Florales">
+        <div class="info">
+          <h3>Arreglos Florales</h3>
+          <button onclick="window.location.href='arreglos.html'">Ver</button>
+        </div>
+      </div>
+
+      <div class="producto">
+        <img src="images/eventosrealizados.jpg" alt="Entregas Exitosas - Eventos Realizados">
+        <div class="info">
+          <h3>Entregas Exitosas - Eventos Realizados</h3>
+          <button onclick="window.location.href='categoria.html?id=eventos_realizados'">Ver</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="contacto">
+    <p>📞 Pedidos al WhatsApp: 934042514</p>
+    <p>📞 Pedidos al WhatsApp: 966176108</p>
+
+    <section class="location">
+  <h3>📍 Visítanos en nuestro local</h3>
+
+  <p class="address">
+    Av. Juan Velasco Alvarado 983 – Villa El Salvador
+  </p>
+
+  <a
+    class="map-link"
+    href="https://www.google.com/maps/place/Av.+Juan+Velasco+Alvarado+983,+Villa+EL+Salvador+15831/@-12.2097892,-76.9443639,17z"
+    target="_blank"
+  >
+    📍 Ver Ubicación
+  </a>
+</section>
+
+  </footer>
+
+  <!-- ===== BOTÓN FLOTANTE WHATSAPP ===== -->
+  <a class="whatsapp" target="_blank"
+   href="https://wa.me/51934042514?text=Hola,%20quiero%20hacer%20un%20pedido%20en%20Florister%C3%ADa%20el%20Para%C3%ADso">
+  WhatsApp 💬
+</a>
+
+  <script src="js/main.js"></script>
+
+  <button id="btnTop" aria-label="Volver arriba">⬆</button>
+  
+
+</body>
+
+
+</html>

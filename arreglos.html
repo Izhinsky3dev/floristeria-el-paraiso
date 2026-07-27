@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arreglos | Florería el Paraíso</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="index.html">
+        <span class="brand-icon">🌸</span>
+        <span class="brand-name">Florería el Paraíso</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html#catalogo">Catálogo</a></li>
+        <li><a class="active" href="arreglos.html">Arreglos</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-right">
+      <a class="icon-btn" href="https://wa.me/51934042514" target="_blank" title="Contacto WhatsApp">📞</a>
+
+      <!-- <button class="icon-btn cart-btn" id="cartBtn" type="button" title="Carrito">
+        🛒 <span class="badge" id="cartCount">0</span>
+      </button> -->
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <h1>💐 Catálogo de Arreglos</h1>
+      <p>Elige el tipo de arreglo</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Tipos de arreglos</h2>
+
+    <section class="grid" id="arreglos-categorias"></section>
+
+    <p style="margin-top:20px;">
+      <a href="index.html">← Volver al inicio</a>
+    </p>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    renderCategoriasArreglos();
+  </script>
+
+  <button id="btnTop" aria-label="Volver arriba">⬆</button>
+
+</body>
+
+</html>
+
